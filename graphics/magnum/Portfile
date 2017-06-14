@@ -1,0 +1,72 @@
+##
+
+PortSystem			1.0
+PortGroup			cmake 1.0
+
+#github.setup		mosra magnum f1f34df6a0a9b7a74f5d9773d7de121eb89def5f
+#github.tarball_from	archive
+
+name				magnum
+version				f1f34df6a0a9b7a74f5d9773d7de121eb89def5f
+
+master_sites		https://github.com/mosra/${name}/archive/
+distfiles			${version}.tar.gz
+checksums			rmd160  3d367adbc53c38f08d02f77b22dd732b34bf608a \
+					sha256  1af60b15ccdbc6a95b3d01420c181d4c1ff1eee7ac55c1ad42bcb7b48e71bc8a
+
+
+depends_lib			port:corrade
+
+categories			graphics
+platforms			darwin
+license				MIT
+
+maintainers			nomaintainers
+
+description			C++11/C++14 and OpenGL 2D/3D graphics engine
+long_description	${description}
+
+homepage			https://github.com/mosra/magnum
+
+#use_tgz				yes
+
+configure.args-append -DCMAKE_BUILD_TYPE=Release   \
+					-DWITH_WINDOWLESSCGLAPPLICATION=ON -DWITH_CGLCONTEXT=ON -DWITH_OPENGLTESTER=ON \
+					-DWITH_MAGNUMFONT=ON -DWITH_MAGNUMFONTCONVERTER=ON
+
+variant audio description {Add audio support} {
+	configure.args-append \
+		-DWITH_AUDIO=ON
+}
+
+variant sdl2app description {Add SDL2 application support} {
+	depends_lib-append \
+		port:libsdl2
+
+	configure.args-append \
+		-DWITH_SDL2APPLICATION=ON
+}
+
+variant fonts description {Add fonts support} {
+	configure.args-append \
+		-DWITH_MAGNUMFONT=ON \
+		-DWITH_MAGNUMFONTCONVERTER=ON
+}
+
+variant importers description {Add basic importers support} {
+	configure.args-append \
+		-DWITH_OBJIMPORTER=ON \
+		-DWITH_TGAIMPORTER=ON \
+		-DWITH_WAVAUDIOIMPORTER=ON
+}
+
+variant utils description {Add helper utilities} {
+	configure.args-append \
+		-DWITH_MAGNUMINFO=ON \
+		-DWITH_IMAGECONVERTER=ON \
+		-DWITH_FONTCONVERTER=ON \
+		-DWITH_DISTANCEFIELDCONVERTER=ON
+}
+
+default_variants	+sdl2app +audio +fonts +importers
+

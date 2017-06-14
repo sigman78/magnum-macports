@@ -1,0 +1,31 @@
+##
+
+PortSystem			1.0
+PortGroup			cmake 1.0
+
+#github.setup		mosra corrade feff8932674d7a2eb1a4038f7e9836727d928f4b
+#github.tarball_from	archive
+
+name				corrade
+version				feff8932674d7a2eb1a4038f7e9836727d928f4b
+
+master_sites		https://github.com/mosra/${name}/archive/
+distfiles			${version}.tar.gz
+checksums			rmd160  b28d0f98726d2af2b6fad0d23f64647009305f5a \
+					sha256  4d6d6f35286e1ad0b184336795f208ddbf8f40cf3b64240b33edd97506af5b71
+
+
+depends_lib			port:cmake
+
+categories			graphics
+platforms			darwin
+license				MIT
+
+maintainers			nomaintainers
+
+description			C++11/C++14 multiplatform utility library
+long_description	${description}
+
+homepage			https://github.com/mosra/corrade
+
+configure.args-append -DCMAKE_BUILD_TYPE=Release -DENABLE_TESTS=OFF
